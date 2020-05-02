@@ -79,6 +79,13 @@ class Graph:
                 return False
         return True                             #if all location can reach any location then return True
 
+    # add random edges at random vertices
+    def rand_add(self):
+        import random
+        src, des=random.randit(0, len(def_location)-1), random.randit(0, len(def_location)-1)   #random of endpoints
+        val=random.randit(1,20)                                                                 #random value of edge
+        self.add_edge(def_location[src], def_location[des], val)
+
 def_location=['AU','EG','BE','DK','HK']
 def_edge=[['AU','EG','12'], ['AU','HK','6'], ['DK','EG','4'], ['DK','BE','1'], ['HK','BE','9']]
 # def_edge=[['AU','EG','12'], ['AU','HK','6'], ['EG','DK','4'], ['DK','BE','1'], ['HK','BE','9']]   #AU go everywhere can detect BE in cycle

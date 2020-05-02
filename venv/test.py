@@ -6,3 +6,5 @@ dict3={'HK','EU', 'AU'}
 print(dict1==dict2)
 print(dict1==dict3)
 
+import random
+

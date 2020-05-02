@@ -25,7 +25,7 @@
     <property name="TODO_SCOPE" value="All Places" />
     <property name="settings.editor.selected.configurable" value="preferences.toDoOptions" />
   </component>
-  <component name="RunManager" selected="Python.CPT212_Asn2_Group7">
+  <component name="RunManager" selected="Python.test">
     <configuration name="CPT212_Asn2_Group7" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CPT212-Asn2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -70,8 +70,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.CPT212_Asn2_Group7" />
         <item itemvalue="Python.test" />
+        <item itemvalue="Python.CPT212_Asn2_Group7" />
       </list>
     </recent_temporary>
   </component>
@@ -101,29 +101,29 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1492" height="190" key="GridCell.Tab.0.bottom" timestamp="1588340628725">
+    <state width="1492" height="190" key="GridCell.Tab.0.bottom" timestamp="1588347231113">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
-    <state width="1492" height="190" key="GridCell.Tab.0.bottom/0.40.1536.824@0.40.1536.824" timestamp="1588340628725" />
-    <state width="1492" height="190" key="GridCell.Tab.0.center" timestamp="1588340628725">
+    <state width="1492" height="190" key="GridCell.Tab.0.bottom/0.40.1536.824@0.40.1536.824" timestamp="1588347231113" />
+    <state width="1492" height="190" key="GridCell.Tab.0.center" timestamp="1588347231113">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
-    <state width="1492" height="190" key="GridCell.Tab.0.center/0.40.1536.824@0.40.1536.824" timestamp="1588340628725" />
-    <state width="1492" height="190" key="GridCell.Tab.0.left" timestamp="1588340628725">
+    <state width="1492" height="190" key="GridCell.Tab.0.center/0.40.1536.824@0.40.1536.824" timestamp="1588347231113" />
+    <state width="1492" height="190" key="GridCell.Tab.0.left" timestamp="1588347231113">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
-    <state width="1492" height="190" key="GridCell.Tab.0.left/0.40.1536.824@0.40.1536.824" timestamp="1588340628725" />
-    <state width="1492" height="190" key="GridCell.Tab.0.right" timestamp="1588340628725">
+    <state width="1492" height="190" key="GridCell.Tab.0.left/0.40.1536.824@0.40.1536.824" timestamp="1588347231113" />
+    <state width="1492" height="190" key="GridCell.Tab.0.right" timestamp="1588347231113">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
-    <state width="1492" height="190" key="GridCell.Tab.0.right/0.40.1536.824@0.40.1536.824" timestamp="1588340628725" />
+    <state width="1492" height="190" key="GridCell.Tab.0.right/0.40.1536.824@0.40.1536.824" timestamp="1588347231113" />
     <state x="277" y="94" key="SettingsEditor" timestamp="1588333260762">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
     <state x="277" y="94" key="SettingsEditor/0.40.1536.824@0.40.1536.824" timestamp="1588333260762" />
-    <state x="828" y="276" key="com.intellij.ide.util.TipDialog" timestamp="1588333133665">
+    <state x="828" y="276" key="com.intellij.ide.util.TipDialog" timestamp="1588359589934">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
-    <state x="828" y="276" key="com.intellij.ide.util.TipDialog/0.40.1536.824@0.40.1536.824" timestamp="1588333133665" />
+    <state x="828" y="276" key="com.intellij.ide.util.TipDialog/0.40.1536.824@0.40.1536.824" timestamp="1588359589934" />
   </component>
 </project>
