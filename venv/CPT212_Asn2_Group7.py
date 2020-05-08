@@ -49,7 +49,7 @@ class Graph:
     def traversal(self):
         self.reachable = {}     #store all sources'reachbility in dictionary
         for src, node in self.graph.items():     #source, locations
-            outgoing = []       #store this source reachbility in list
+            outgoing = []       #store this source reachability in list
             traversed = [src]   #store traversed locations for stopping depth first search
             while node:
                 outgoing.append(node.location)
@@ -63,7 +63,7 @@ class Graph:
     def cycle(self):
         self.traversal()        #initiate traversal of the graph
         for src, des in self.reachable.items(): #starting location, reachable locations
-            print('cycle', src,des)
+            # print('cycle', src,des)
             if src in des:            #if any starting location can reach to itself then return True
                 return True
         return False                  #if none starting location is reachable to itself then return False
@@ -74,7 +74,7 @@ class Graph:
         copy=self.reachable.items()
         for src, des in copy:
             des=set([x for x in des if x!= src])  #use set to eliminate duplicate and if condition to eliminate cycle
-            print('con', src, des)
+            # print('con', src, des)
             if len(des)!=len(def_location)-1:     #if any location cannot reach any location then return False
                 return False
         return True                             #if all location can reach any location then return True
@@ -82,19 +82,21 @@ class Graph:
     # add random edges at random vertices
     def rand_add(self):
         import random
-        src, des=random.randit(0, len(def_location)-1), random.randit(0, len(def_location)-1)   #random of endpoints
-        val=random.randit(1,20)                                                                 #random value of edge
-        self.add_edge(def_location[src], def_location[des], val)
+        # src=random.choice(def_    location)
+        # des=random.choice([x for x in def_location if x!= src])
+        val=random.randint(1,20)                                                                 #random value of edge
+        print(src, des, val)
+        # self.add_edge(src,des, val)
 
 def_location=['AU','EG','BE','DK','HK']
-def_edge=[['AU','EG','12'], ['AU','HK','6'], ['DK','EG','4'], ['DK','BE','1'], ['HK','BE','9']]
+# def_edge=[['AU','EG','12'], ['AU','HK','6'], ['DK','EG','4'], ['DK','BE','1'], ['HK','BE','9']]
 # def_edge=[['AU','EG','12'], ['AU','HK','6'], ['EG','DK','4'], ['DK','BE','1'], ['HK','BE','9']]   #AU go everywhere can detect BE in cycle
-# def_edge=[['EG','AU','12'], ['AU','HK','6'], ['DK','EG','4'], ['DK','BE','1'], ['HK','BE','9']]     #DK go everywhere can detect BE in cycle
-# def_edge=[['EG','AU','12'], ['AU','HK','6'], ['DK','EG','4'], ['BE','DK','1'], ['HK','BE','9']]     #BE go everywhere then all cycle
+# def_edge=[['EG','AU','12'], ['AU','XHK','6'], ['DK','EG','4'], ['DK','BE','1'], ['HK','BE','9']]     #DK go everywhere can detect BE in cycle
+def_edge=[['EG','AU','12'], ['AU','HK','6'], ['DK','EG','4'], ['BE','DK','1'], ['HK','BE','9']]     #BE go everywhere then all cycle
 
 run = Graph(def_location, def_edge)
 run.print_graph()
-# run.traversal()
-print(run.cycle())
-print(run.strongly_connected())
+run.traversal()
+# print(run.cycle())
+# print(run.strongly_connected())
 
