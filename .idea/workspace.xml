@@ -23,9 +23,17 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TODO_SCOPE" value="All Places" />
-    <property name="settings.editor.selected.configurable" value="preferences.toDoOptions" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="CPT212-Asn2" is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="CPT212-Asn2" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.CPT212_Asn2_Group7">
     <configuration name="CPT212_Asn2_Group7" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CPT212-Asn2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -33,9 +41,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="D:\Python3.7\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/CPT212_Asn2_Group7.py" />
@@ -54,9 +62,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="D:\Python3.7\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/test.py" />
@@ -70,8 +78,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.CPT212_Asn2_Group7" />
+        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -101,29 +109,43 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1492" height="190" key="GridCell.Tab.0.bottom" timestamp="1588347231113">
-      <screen x="0" y="40" width="1536" height="824" />
+    <state x="496" y="47" key="#CPT212_Asn2_Group7" timestamp="1588864574220">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
+    <state x="496" y="47" key="#CPT212_Asn2_Group7/0.0.1536.864@0.0.1536.864" timestamp="1588864574220" />
+    <state x="496" y="47" key="#test" timestamp="1588864539610">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="496" y="47" key="#test/0.0.1536.864@0.0.1536.864" timestamp="1588864539610" />
+    <state width="1515" height="223" key="GridCell.Tab.0.bottom" timestamp="1588933276146">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1515" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1588933276146" />
     <state width="1492" height="190" key="GridCell.Tab.0.bottom/0.40.1536.824@0.40.1536.824" timestamp="1588347231113" />
-    <state width="1492" height="190" key="GridCell.Tab.0.center" timestamp="1588347231113">
-      <screen x="0" y="40" width="1536" height="824" />
+    <state width="1515" height="223" key="GridCell.Tab.0.center" timestamp="1588933276145">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
+    <state width="1515" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1588933276145" />
     <state width="1492" height="190" key="GridCell.Tab.0.center/0.40.1536.824@0.40.1536.824" timestamp="1588347231113" />
-    <state width="1492" height="190" key="GridCell.Tab.0.left" timestamp="1588347231113">
-      <screen x="0" y="40" width="1536" height="824" />
+    <state width="1515" height="223" key="GridCell.Tab.0.left" timestamp="1588933276145">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
+    <state width="1515" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1588933276145" />
     <state width="1492" height="190" key="GridCell.Tab.0.left/0.40.1536.824@0.40.1536.824" timestamp="1588347231113" />
-    <state width="1492" height="190" key="GridCell.Tab.0.right" timestamp="1588347231113">
-      <screen x="0" y="40" width="1536" height="824" />
+    <state width="1515" height="223" key="GridCell.Tab.0.right" timestamp="1588933276146">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
+    <state width="1515" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1588933276146" />
     <state width="1492" height="190" key="GridCell.Tab.0.right/0.40.1536.824@0.40.1536.824" timestamp="1588347231113" />
-    <state x="277" y="94" key="SettingsEditor" timestamp="1588333260762">
-      <screen x="0" y="40" width="1536" height="824" />
+    <state x="475" y="27" key="SettingsEditor" timestamp="1588867869291">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
+    <state x="475" y="27" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1588867869291" />
     <state x="277" y="94" key="SettingsEditor/0.40.1536.824@0.40.1536.824" timestamp="1588333260762" />
-    <state x="828" y="276" key="com.intellij.ide.util.TipDialog" timestamp="1588359589934">
-      <screen x="0" y="40" width="1536" height="824" />
+    <state x="828" y="247" key="com.intellij.ide.util.TipDialog" timestamp="1588931477632">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
+    <state x="828" y="247" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1588931477632" />
     <state x="828" y="276" key="com.intellij.ide.util.TipDialog/0.40.1536.824@0.40.1536.824" timestamp="1588359589934" />
   </component>
 </project>
