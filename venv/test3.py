@@ -5,26 +5,27 @@ import heapq
 # node to become a list to store location name, val as value in dictionary
 class AdjNode:
     def __init__(self, data, val):
-        self.location = data        #store location name
-        self.val=val                #store outgoing value
-        self.next = None            #store next node
+        self.location = data  # store location name
+        self.val = val  # store outgoing value
+        self.next = None  # store next node
+
 
 # graph to store each vertices as key and its outgoing vertices in a list-like object type as value
 class Graph:
     # construct default graph
     def __init__(self, def_location, def_edge):
-        self.graph = {x:None for x in def_location}     #creation of graph/dictionary with default vertices
-        for x in range(len(def_edge)):                  #add all default edges
-            src,des,val=def_edge[x]                         #creation of nodes with location name, value
-            self.add_edge(src,des,int(val))
-        self.getrandom()                                #generate dictionary of all possible endpoints for random edges
+        self.graph = {x: None for x in def_location}  # creation of graph/dictionary with default vertices
+        for x in range(len(def_edge)):  # add all default edges
+            src, des, val = def_edge[x]  # creation of nodes with location name, value
+            self.add_edge(src, des, int(val))
+        self.getrandom()  # generate dictionary of all possible endpoints for random edges
         # self.changes=False
 
     # add outgoing edge to the source location
     def add_edge(self, src, des, val):
-        node = AdjNode(des, val)           # create node to be inserted
-        node.next = self.graph[src]        # set recent added location to be first and its next is the previous
-        self.graph[src] = node             # set all outgoing locations to the source location
+        node = AdjNode(des, val)  # create node to be inserted
+        node.next = self.graph[src]  # set recent added location to be first and its next is the previous
+        self.graph[src] = node  # set all outgoing locations to the source location
 
     # print the graph
     def print_graph(self):
@@ -41,97 +42,99 @@ class Graph:
 
     # depth first search of locations
     def dfs(self, src, visited):
-        visited.append(src)     #insert this location as visited
-        node=self.graph[src]    #get location's outgoing node
-        outgoing=[]             #to store location's outgoing location0
-        if not node:            #small improvement to save 1 call of dfs for location that has no outgoing edge at all
-            self.reachabilty[src]=[]
+        visited.append(src)  # insert this location as visited
+        node = self.graph[src]  # get location's outgoing node
+        outgoing = []  # to store location's outgoing location0
+        if not node:  # small improvement to save 1 call of dfs for location that has no outgoing edge at all
+            self.reachabilty[src] = []
             return []
-        while node:             #if location has outgoing node
-            outgoing.append(node.location)                  #store this outgoing node
-            if node.location in self.reachabilty:           #memoization, if location that has fully dfs before
-                outgoing+=self.reachabilty[node.location]
-            elif node.location not in visited:              #else if location that hasn't haven't fully dfs and havent visit before yet
-                outgoing+=self.dfs(node.location, visited)      #dfs
-            node=node.next
+        while node:  # if location has outgoing node
+            outgoing.append(node.location)  # store this outgoing node
+            if node.location in self.reachabilty:  # memoization, if location that has fully dfs before
+                outgoing += self.reachabilty[node.location]
+            elif node.location not in visited:  # else if location that hasn't haven't fully dfs and havent visit before yet
+                outgoing += self.dfs(node.location, visited)  # dfs
+            node = node.next
         return outgoing
 
     # traverse each vertices
     def traversal(self):
-        self.reachabilty={}
-        self.changes=True
-        for src, node in self.graph.items():            #traverse all vertices
-            if src not in self.reachabilty:             #some location with no outgoing edge will be created during dfs in small improvement part
-                self.reachabilty[src]=self.dfs(src,[])  #store all vertices' reachability
-        print(self.reachabilty)            #to remove
+        self.reachabilty = {}
+        self.changes = True
+        for src, node in self.graph.items():  # traverse all vertices
+            if src not in self.reachabilty:  # some location with no outgoing edge will be created during dfs in small improvement part
+                self.reachabilty[src] = self.dfs(src, [])  # store all vertices' reachability
+        print(self.reachabilty)  # to remove
 
-    #check cycle graph
+    # check cycle graph
     def check_cycle(self):
         print('cycle')
-        cycle=False
+        cycle = False
         while True:
-            self.traversal()                            # traversal vertices to get each reachability
-            result=[]
-            for src, node in self.reachabilty.items():  #check all vertices
-                if src in node:                             #if location is in its reachability
+            self.traversal()  # traversal vertices to get each reachability
+            result = []
+            for src, node in self.reachabilty.items():  # check all vertices
+                if src in node:  # if location is in its reachability
                     result.append((src, self.reachabilty[src]))
-                    print(src, 'yes cycle')          #to remove
-                    cycle=True
+                    print(src, 'yes cycle')  # to remove
+                    cycle = True
                     break
-                else:                               #to remove
-                    cycle=False
-            if cycle==False:                            #if cycle check is false, then add edges and continue check
+                else:  # to remove
+                    cycle = False
+            if cycle == False:  # if cycle check is false, then add edges and continue check
                 self.add_random()
                 # break                              #to remove
-            else:                                       #else if cycle check is true, then print result
+            else:  # else if cycle check is true, then print result
                 pp(result)
                 break
 
     # check strongly connected graph
     def check_strongly(self):
         print('connec')
-        strongly=True
+        strongly = True
         while True:
-            self.traversal()                            # traversal vertices to get each reachability
+            self.traversal()  # traversal vertices to get each reachability
             result = []
-            for src, node in self.reachabilty.items():  #check all vertices
-                node=set([x for x in node if x is not src])     #use set to eliminate duplication and self
-                if len(node)==len(def_location)-1:              #if total of reachbility is same as number of vertices except self
+            for src, node in self.reachabilty.items():  # check all vertices
+                node = set([x for x in node if x is not src])  # use set to eliminate duplication and self
+                if len(node) == len(
+                        def_location) - 1:  # if total of reachbility is same as number of vertices except self
                     result.append((src, node))
-                    strongly=True
-                else:                                           #else if total of reachbility is not same as number of vertices except self
-                    print(src, '1st no strongly')   #to remove
-                    strongly=False
+                    strongly = True
+                else:  # else if total of reachbility is not same as number of vertices except self
+                    print(src, '1st no strongly')  # to remove
+                    strongly = False
                     break
-            if strongly==False:                         #if strongly connected check is false, then add edges and continue check
+            if strongly == False:  # if strongly connected check is false, then add edges and continue check
                 self.add_random()
                 # break                           # to remove
-            else:                                       #else if stronlgy connected check is true, then print result
+            else:  # else if stronlgy connected check is true, then print result
                 pp(result)
                 break
 
     # generate random vertices with random value
     def add_random(self):
-        print('can', self.can_random)                           #to remove
+        print('can', self.can_random)  # to remove
         from random import randint, choice
-        src=choice(list(self.can_random))                                #find 1st endpoint
-        des=choice(self.can_random[src])                                 #find 2nd endpoint
-        print(src, des)                             #to remove
-        self.add_edge(src, des, randint(1,20))                      #add random edges
-        self.can_random[src].remove(des)                                 #remove the 2nd endpoint from the list of 1st endpoint
-        if len(self.can_random[src]) ==0:                                #remove the 1st endpoint if no more 2nd endpoint for it
+        src = choice(list(self.can_random))  # find 1st endpoint
+        des = choice(self.can_random[src])  # find 2nd endpoint
+        print(src, des)  # to remove
+        self.add_edge(src, des, randint(1, 20))  # add random edges
+        self.can_random[src].remove(des)  # remove the 2nd endpoint from the list of 1st endpoint
+        if len(self.can_random[src]) == 0:  # remove the 1st endpoint if no more 2nd endpoint for it
             del self.can_random[src]
         self.print_graph()
 
     # generate dictionary of all possible endpoints for random edges
     def getrandom(self):
-        self.can_random = {}                                # to compile a dictionary of 1st endpoints and 2nd endpoints from the list
-        for src, node in self.graph.items():                # find each edges existed in graph
-            des_random = [x for x in def_location if x is not src]  # compute all vertices and eliminate self as 2nd endpoints(prevent self loop)
+        self.can_random = {}  # to compile a dictionary of 1st endpoints and 2nd endpoints from the list
+        for src, node in self.graph.items():  # find each edges existed in graph
+            des_random = [x for x in def_location if
+                          x is not src]  # compute all vertices and eliminate self as 2nd endpoints(prevent self loop)
             while node:
-                des_random.remove(node.location)                        # eliminate existed 2nd endpoints from the list
+                des_random.remove(node.location)  # eliminate existed 2nd endpoints from the list
                 node = node.next
-            self.can_random[src] = des_random                       # pair up the 1st endpoints with all non-existed 2nd endpoints
+            self.can_random[src] = des_random  # pair up the 1st endpoints with all non-existed 2nd endpoints
 
     # Calculate cost between two adjacent nodes
     def cost(self, src, des):
@@ -150,7 +153,7 @@ class Graph:
         vertices = {}
         for i in range(len(def_location)):
             vertices[def_location[i]] = (
-            float('inf'), def_location[i], None)  # distance value, current node ,and previous node
+                float('inf'), def_location[i], None)  # distance value, current node ,and previous node
 
         vertices[src] = (0, src, None)  # initialize the source node
 
@@ -167,22 +170,26 @@ class Graph:
             visited.append(u[1])  # Store the current node into the list
 
             reachable_nodes = set(copy[u[1]])  # List of nodes reachable by the current node
+            nodes_list = [i for i in def_location if i != u[1]]  # Get list of nodes other than itself
 
-            for node in reachable_nodes:
-                if u[0] + self.cost(u[1], node) < vertices[node][0]:
-                    temp_list = list(vertices[node])
-                    temp_list[0] = u[0] + self.cost(u[1],
-                                                    node)  # Convert tuple to list to update value and revert back
-                    temp_list[2] = u[1]
-                    vertices[node] = tuple(temp_list)
-                    heapq.heappush(dict_heap, vertices[node])
+            for node in nodes_list:
+                if node in reachable_nodes:
+                    if u[0] + self.cost(u[1], node) < vertices[node][0]:
+                        # Convert tuple to list to update value and revert back
+                        temp_list = list(vertices[node])
+                        temp_list[0] = u[0] + self.cost(u[1], node)
+                        temp_list[2] = u[1]
+                        vertices[node] = tuple(temp_list)
+                        heapq.heappush(dict_heap, vertices[node])
+                else:
+                    self.add_random()
+                    self.traversal()
+                    reachable_nodes = set(self.reachabilty[u[1]])
 
-        if vertices[des][0] != float('inf'):
-            print(src, 'to', des, '=> Cost: ', vertices[des][0], ' Previous:', vertices[des][2])
-        else:
-            print(src, 'to', des, '=> Cost: ', vertices[des][0], ' Previous:', vertices[des][2], ' Unreachable')
+        print(src, 'to', des, '=> Cost: ', vertices[des][0], ' Previous:', vertices[des][2])
 
-def_location=['AU','EG','BE','DK','HK']
+
+def_location = ['AU', 'EG', 'BE', 'DK', 'HK']
 def_edge = [['AU', 'EG', '12'], ['AU', 'HK', '6'], ['DK', 'EG', '4'], ['DK', 'BE', '1'], ['HK', 'BE', '9'],
             ['AU', 'DK', '6']]
 # def_edge=[['AU','EG','12'], ['AU','HK','6'], ['EG','DK','4'], ['DK','BE','1'], ['HK','BE','9']]   #AU go everywhere
@@ -193,4 +200,4 @@ run = Graph(def_location, def_edge)
 run.print_graph()
 run.check_cycle()
 run.check_strongly()
-run.dijkstra_shortest_path('AU','EG')
+run.dijkstra_shortest_path('EG', 'AU')
