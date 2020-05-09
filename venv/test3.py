@@ -119,6 +119,7 @@ class Graph:
             return False
         else:
             self.traversal()
+            self.getrandom()
             while node2 not in self.reachabilty.get(node1):
                 self.add_random()
                 self.traversal()
@@ -175,6 +176,7 @@ class Graph:
                             cur=x
                             break;
                 path.insert(0, src.location)
+                self.printQueue(traversed)
                 print(path)
                 print(totalCost)
                 return
@@ -186,14 +188,14 @@ class Graph:
             while neighbour!=None:
                 # check whether it is in the traversed list
                 if neighbour in traversed:
-                    continue
+                    neighbour=neighbour.next
                 else:
                     #create a node for the neighbour
                     child = AdjNode(neighbour.location, cur.val + neighbour.val)
                     # check whether it is in the priority queue
                     if self.add_to_pq(priority_queue,neighbour):
                         priority_queue.append(neighbour)
-                neighbour=neighbour.next
+                    neighbour=neighbour.next
 
         # the goal node is not connected to the src node
         print("Node Not Found")
