@@ -109,6 +109,103 @@ class Graph:
                 pp(result)
                 break
 
+    #check the distance between 2 nodes
+    def shortest_path(self):
+        node1 = input("Enter node 1 : ")
+        node2 = input("Enter node 2 : ")
+        # node does not exists
+        if node1 not in self.graph.keys() or node2 not in self.graph.keys():
+            print("Node does not exists")
+            return False
+        else:
+            self.traversal()
+            while node2 not in self.reachabilty.get(node1):
+                self.add_random()
+                self.traversal()
+            #run best first search algo
+            self.bestFirstSearch(node1, node2)
+            return True
+
+    # prints a list of edges
+    def printQueue(self, queue):
+        for x in queue:
+            print(x.location + "  " + str(x.val))
+
+    # algorithm of best first search
+    def bestFirstSearch(self, node1, goal):
+        # two list are created
+        priority_queue = []
+        traversed = []
+
+        # create a node for the src and append it to the priority queue
+        src=AdjNode(node1,0)
+        priority_queue.append(src)
+
+        # the priority queue is not empty
+        while priority_queue:
+            # sort the queue using their edges cost
+            priority_queue.sort(key=lambda node:node.val)
+            cur=priority_queue.pop(0)
+            traversed.append(cur)
+
+            # if current points towards the goal node, path is the nodes traversed to reach the destination
+            if cur.location==goal:
+                path=[]
+                totalCost=0
+
+                # backtrack occurs and it goes back to the src node
+                while cur.location!=src.location:
+                    path.insert(0, cur.location)
+                    totalCost=totalCost+cur.val
+                    cond=False
+
+                    # s represents the key and nodes represent the linked list of tuples
+                    for s,node in self.graph.items():
+                        while node:
+                            if node==cur:
+                                cond=True
+                                temp=s
+                                break
+                            else:
+                                node=node.next
+                        if cond:
+                            break
+                    for x in traversed:
+                        if x.location==temp:
+                            cur=x
+                            break;
+                path.insert(0, src.location)
+                print(path)
+                print(totalCost)
+                return
+
+            # get the neighbours
+            neighbour=self.graph.get(cur.location)
+
+            # loop neighbours
+            while neighbour!=None:
+                # check whether it is in the traversed list
+                if neighbour in traversed:
+                    continue
+                else:
+                    #create a node for the neighbour
+                    child = AdjNode(neighbour.location, cur.val + neighbour.val)
+                    # check whether it is in the priority queue
+                    if self.add_to_pq(priority_queue,neighbour):
+                        priority_queue.append(neighbour)
+                neighbour=neighbour.next
+
+        # the goal node is not connected to the src node
+        print("Node Not Found")
+        return
+
+    # check to see whether the node should be added to pq or not
+    def add_to_pq(self,pq,neighbour):
+        for node in pq:
+            if neighbour==node:
+                return False
+        return True
+
     # generate random vertices with random value
     def add_random(self):
         print('can', self.can_random)                           #to remove
@@ -140,5 +237,6 @@ def_edge=[['AU','EG','12'], ['AU','HK','6'], ['DK','EG','4'], ['DK','BE','1'], [
 
 run = Graph(def_location, def_edge)
 run.print_graph()
-run.check_cycle()
-run.check_strongly()
+# run.check_cycle()
+# run.check_strongly()
+run.shortest_path()
