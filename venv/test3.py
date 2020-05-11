@@ -2,6 +2,8 @@
     Created by Aaron at 08-May-20"""
 from pprint import pprint as pp
 import heapq
+
+
 # node to become a list to store location name, val as value in dictionary
 class AdjNode:
     def __init__(self, data, val):
@@ -165,6 +167,7 @@ class Graph:
         visited = []  # List to store visited nodes
         self.traversal()
         copy = self.reachabilty  # Obtain list of reachable nodes from each node
+        path = [src]  # The shortest path
         while len(dict_heap) != 0:
             u = heapq.heappop(dict_heap)  # Get the minimum distance value node from the heap and remove it
             visited.append(u[1])  # Store the current node into the list
@@ -182,11 +185,16 @@ class Graph:
                         vertices[node] = tuple(temp_list)
                         heapq.heappush(dict_heap, vertices[node])
                 else:
-                    self.add_random()
-                    self.traversal()
-                    reachable_nodes = set(self.reachabilty[u[1]])
+                    while node not in reachable_nodes:
+                        self.add_random()
+                        self.traversal()
+                        reachable_nodes = set(self.reachabilty[u[1]])
 
-        print(src, 'to', des, '=> Cost: ', vertices[des][0], ' Previous:', vertices[des][2])
+        current_node = des
+        while current_node != src:
+            path.insert(1, current_node)
+            current_node = vertices[current_node][2]
+        print(src, 'to', des, '=> Cost: ', vertices[des][0], ' Shortest path: ', path)
 
 
 def_location = ['AU', 'EG', 'BE', 'DK', 'HK']
