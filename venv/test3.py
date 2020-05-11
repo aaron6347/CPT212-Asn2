@@ -167,7 +167,7 @@ class Graph:
         visited = []  # List to store visited nodes
         self.traversal()
         copy = self.reachabilty  # Obtain list of reachable nodes from each node
-        path = [src]  # The shortest path
+        path = []  # The shortest path
         while len(dict_heap) != 0:
             u = heapq.heappop(dict_heap)  # Get the minimum distance value node from the heap and remove it
             visited.append(u[1])  # Store the current node into the list
@@ -176,6 +176,11 @@ class Graph:
             nodes_list = [i for i in def_location if i != u[1]]  # Get list of nodes other than itself
 
             for node in nodes_list:
+                while node not in reachable_nodes:
+                    self.add_random()
+                    self.traversal()
+                    reachable_nodes = set(self.reachabilty[u[1]])
+
                 if node in reachable_nodes:
                     if u[0] + self.cost(u[1], node) < vertices[node][0]:
                         # Convert tuple to list to update value and revert back
@@ -184,15 +189,11 @@ class Graph:
                         temp_list[2] = u[1]
                         vertices[node] = tuple(temp_list)
                         heapq.heappush(dict_heap, vertices[node])
-                else:
-                    while node not in reachable_nodes:
-                        self.add_random()
-                        self.traversal()
-                        reachable_nodes = set(self.reachabilty[u[1]])
 
         current_node = des
         while current_node != src:
-            path.insert(1, current_node)
+            current_cost = vertices[current_node][0] - vertices[vertices[current_node][2]][0]
+            path.insert(0, (vertices[current_node][2], current_node, current_cost))
             current_node = vertices[current_node][2]
         print(src, 'to', des, '=> Cost: ', vertices[des][0], ' Shortest path: ', path)
 
