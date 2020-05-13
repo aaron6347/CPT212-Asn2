@@ -170,13 +170,17 @@ class Graph:
         path = []  # The shortest path
         while len(dict_heap) != 0:
             u = heapq.heappop(dict_heap)  # Get the minimum distance value node from the heap and remove it
+
+            if u[1] in visited:  # Skip the redundant visited nodes in Queue
+                continue
+
             visited.append(u[1])  # Store the current node into the list
 
             reachable_nodes = set(copy[u[1]])  # List of nodes reachable by the current node
             nodes_list = [i for i in def_location if i != u[1]]  # Get list of nodes other than itself
 
             for node in nodes_list:
-                while node not in reachable_nodes:
+                while des not in reachable_nodes:
                     self.add_random()
                     self.traversal()
                     reachable_nodes = set(self.reachabilty[u[1]])
@@ -210,3 +214,4 @@ run.print_graph()
 run.check_cycle()
 run.check_strongly()
 run.dijkstra_shortest_path('EG', 'AU')
+run.print_graph()
