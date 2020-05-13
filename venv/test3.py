@@ -159,12 +159,6 @@ class Graph:
 
         vertices[src] = (0, src, None)  # initialize the source node
 
-        dict_heap = []
-        # Create a min heap of the vertices dictionary based on the distance value
-        for j in vertices:
-            heapq.heappush(dict_heap, vertices[j])
-
-        visited = []  # List to store visited nodes
         self.traversal()
         copy = self.reachabilty  # Obtain list of reachable nodes from each node
         reachable_nodes = set(copy[src])  # List of nodes reachable by the current node
@@ -173,6 +167,14 @@ class Graph:
             self.add_random()
             self.traversal()
             reachable_nodes = set(self.reachabilty[src])
+
+        dict_heap = []
+        # Create a min heap of the vertices dictionary based on the distance value
+        for j in vertices:
+            if vertices[j][1] in reachable_nodes:
+                heapq.heappush(dict_heap, vertices[j])
+
+        visited = []  # List to store visited nodes
 
         path = []  # The shortest path
         while len(dict_heap) != 0:
@@ -184,15 +186,17 @@ class Graph:
             visited.append(u[1])  # Store the current node into the list
 
             # nodes_list = [i for i in def_location if i != u[1]]  # Get list of nodes other than itself
+            node = self.graph[u[1]]  # Get the adjacent nodes from the current nodes
 
-            for node in reachable_nodes:
-                if u[0] + self.cost(u[1], node) < vertices[node][0]:
+            while node:
+                if u[0] + self.cost(u[1], node.location) < vertices[node.location][0]:
                     # Convert tuple to list to update value and revert back
-                    temp_list = list(vertices[node])
-                    temp_list[0] = u[0] + self.cost(u[1], node)
+                    temp_list = list(vertices[node.location])
+                    temp_list[0] = u[0] + self.cost(u[1], node.location)
                     temp_list[2] = u[1]
-                    vertices[node] = tuple(temp_list)
-                    heapq.heappush(dict_heap, vertices[node])
+                    vertices[node.location] = tuple(temp_list)
+                    heapq.heappush(dict_heap, vertices[node.location])
+                node = node.next
 
         current_node = des
         while current_node != src:
