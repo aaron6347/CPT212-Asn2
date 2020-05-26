@@ -56,7 +56,6 @@ class Graph:
             node = node.next
         return outgoing
 
-
     # check cycle graph
     def check_cycle(self):
         print('cycle')
@@ -105,16 +104,16 @@ class Graph:
 
     # generate random vertices with random value
     def add_random(self):
-        #print('can', self.can_random)  # to remove
+        # print('can', self.can_random)  # to remove
         from random import randint, choice
         src = choice(list(self.can_random))  # find 1st endpoint
         des = choice(self.can_random[src])  # find 2nd endpoint
-        #print(src, des)  # to remove
+        # print(src, des)  # to remove
         self.add_edge(src, des, randint(1, 20))  # add random edges
         self.can_random[src].remove(des)  # remove the 2nd endpoint from the list of 1st endpoint
         if len(self.can_random[src]) == 0:  # remove the 1st endpoint if no more 2nd endpoint for it
             del self.can_random[src]
-        #self.print_graph()
+        # self.print_graph()
 
     # generate dictionary of all possible endpoints for random edges
     def getrandom(self):
@@ -126,19 +125,6 @@ class Graph:
                 des_random.remove(node.location)  # eliminate existed 2nd endpoints from the list
                 node = node.next
             self.can_random[src] = des_random  # pair up the 1st endpoints with all non-existed 2nd endpoints
-
-    # Calculate cost between two adjacent nodes
-    def cost(self, src, des):
-        node = self.graph[src]
-        value = float('inf')
-        while node:
-            if node.location == des:
-                value = node.val
-                break
-            else:
-                value = float('inf')
-            node = node.next
-        return value
 
     # shortest path using Dijkstra Algorithm
     def dijkstra_shortest_path(self, src, des):
@@ -177,10 +163,10 @@ class Graph:
             node = self.graph[u[1]]  # Get the adjacent nodes from the current nodes
 
             while node:
-                if u[0] + self.cost(u[1], node.location) < vertices[node.location][0]:
+                if u[0] + node.val < vertices[node.location][0]:
                     # Convert tuple to list to update value and revert back
                     temp_list = list(vertices[node.location])
-                    temp_list[0] = u[0] + self.cost(u[1], node.location)
+                    temp_list[0] = u[0] + node.val
                     temp_list[2] = u[1]
                     vertices[node.location] = tuple(temp_list)
                     heapq.heappush(dict_heap, vertices[node.location])
@@ -206,5 +192,5 @@ run = Graph(def_location, def_edge)
 # run.print_graph()
 # run.check_cycle()
 # run.check_strongly()
-run.dijkstra_shortest_path('EG', 'AU')
-#run.print_graph()
+run.dijkstra_shortest_path('AU', 'EG')
+# run.print_graph()
