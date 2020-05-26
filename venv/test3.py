@@ -3,6 +3,7 @@
 from pprint import pprint as pp
 # node to become a list to store location name, val as value in dictionary
 class AdjNode:
+    #construct node
     def __init__(self, data, val):
         self.location = data        #store location name
         self.val=val                #store outgoing value
