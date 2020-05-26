@@ -193,11 +193,11 @@ while True:
             if query == "3":                    # if query is shortest path and need arguments
                 while True:
                     choices = default_location[:]       # copy all locations
-                    src = input("\nWhich starting location ? {}\n".format(choices))
-                    if src.rstrip() in choices:
+                    src = input("\nWhich starting location ? {}\n".format(choices)).strip()
+                    if src in choices:
                         choices.remove(src)                 # remove selected location to avoid self finding
-                        des = input("Which destination location ? {}\n".format(choices))
-                        if des.rstrip() in choices:
+                        des = input("Which destination location ? {}\n".format(choices)).strip()
+                        if des in choices:
                             eval(dic[query] + "(src,des)")
                             break
                         else:
