@@ -1,6 +1,7 @@
 """test4.py
     Created by Aaron at 26-May-20"""
 import heapq
+import os
 
 """node to become a list to store location name, val as value in dictionary"""
 class AdjNode:
@@ -158,7 +159,9 @@ class Graph:
             while node:                                 # traverse each outgoing nodes
                 str += '{0} {1}, '.format(node.location, node.val)
                 node = node.next
-            str = str[:len(str) - 2] + ' /'
+            if str[-2] == ",":
+                str = str[:len(str) - 2]
+            str += ' /'
             print(str)
         print()
 
@@ -169,7 +172,7 @@ default_edge=[['AU','EG','12'], ['AU','HK','6'], ['DK','EG','4'], ['DK','BE','1'
 # default_edge=[['EG','AU','12'], ['AU','HK','6'], ['DK','EG','4'], ['DK','BE','1'], ['HK','BE','9']]     #DK go everywhere can detect BE in cycle
 # default_edge=[['EG','AU','12'], ['AU','HK','6'], ['DK','EG','4'], ['BE','DK','1'], ['HK','BE','9']]     #BE go everywhere then all cycle and all strongly connected
 run = Graph(default_location, default_edge)
-dic={"1":"run.stronglyConnectedMain", "2":"run.", "3":"run.dijkstraShortestPath", "4":"reset", "5":"run.printGraph", "6":"exit"}  #store functionality
+dic={"1":"run.stronglyConnectedMain()", "2":"run.", "3":"run.dijkstraShortestPath", "4":None, "5":"run.printGraph()", "6":"exit()", "help":None}  #store functionality
 
 clear=lambda : os.system('cls')
 cmds=["\nCommand list: ",
@@ -178,22 +181,24 @@ cmds=["\nCommand list: ",
     "              3            :   Shortest Path in graph.",
     "              4            :   Reset to default graph.",
     "              5            :   Print the graph structure.",
-    "              6            :   Exit.\n"]
+    "              6            :   Exit.",
+    "              help         :   Show commands.\n"]
 print("Hi user, this is our CPT 212 Assignment 2: Graph Algorithms".center(120, '_'))
 print("\n".join(cmds))
 while True:
     query = input("What's your function query?\n")
+    clear()
     if query in dic:                    # if query is valid in main menu
         if query != "4":                    # if query is not reset graph
             if query == "3":                    # if query is shortest path and need arguments
                 while True:
                     choices = default_location[:]       # copy all locations
                     src = input("\nWhich starting location ? {}\n".format(choices))
-                    if src in choices:
+                    if src.rstrip() in choices:
                         choices.remove(src)                 # remove selected location to avoid self finding
                         des = input("Which destination location ? {}\n".format(choices))
-                        if des in choices:
-                            result = eval(dic[query] + "(src,des)")
+                        if des.rstrip() in choices:
+                            eval(dic[query] + "(src,des)")
                             break
                         else:
                             print("Invalid location.\n")
@@ -201,8 +206,10 @@ while True:
                     else:
                         print("Invalid location.\n")
                         break
+            elif query == "help":
+                print("\n".join(cmds))
             else:
-                result = eval(dic[query] + "()")
+                eval(dic[query])
         else:                           # if query is reset graph
             run = Graph(default_location, default_edge)
             print("The graph has been reset.\n")
