@@ -48,13 +48,13 @@ class Graph:
         node = self.graph[src]  # get location's outgoing node
         outgoing = []  # to store location's outgoing location0
         if not node:  # small improvement to save 1 call of dfs for location that has no outgoing edge at all
-            self.reachabilty[src] = []
+            # self.reachabilty[src] = []
             return []
         while node:  # if location has outgoing node
             outgoing.append(node.location)  # store this outgoing node
-            if node.location in self.reachabilty:  # memoization, if location that has fully dfs before
-                outgoing += self.reachabilty[node.location]
-            elif node.location not in visited:  # else if location that hasn't haven't fully dfs and havent visit before yet
+            # if node.location in self.reachabilty:  # memoization, if location that has fully dfs before
+            # outgoing += self.reachabilty[node.location]
+            if node.location not in visited:  # else if location that hasn't haven't fully dfs and havent visit before yet
                 outgoing += self.dfs(node.location, visited)  # dfs
             node = node.next
         return outgoing
@@ -116,16 +116,16 @@ class Graph:
 
     # generate random vertices with random value
     def add_random(self):
-        print('can', self.can_random)  # to remove
+        #print('can', self.can_random)  # to remove
         from random import randint, choice
         src = choice(list(self.can_random))  # find 1st endpoint
         des = choice(self.can_random[src])  # find 2nd endpoint
-        print(src, des)  # to remove
+        #print(src, des)  # to remove
         self.add_edge(src, des, randint(1, 20))  # add random edges
         self.can_random[src].remove(des)  # remove the 2nd endpoint from the list of 1st endpoint
         if len(self.can_random[src]) == 0:  # remove the 1st endpoint if no more 2nd endpoint for it
             del self.can_random[src]
-        self.print_graph()
+        #self.print_graph()
 
     # generate dictionary of all possible endpoints for random edges
     def getrandom(self):
@@ -141,6 +141,7 @@ class Graph:
     # Calculate cost between two adjacent nodes
     def cost(self, src, des):
         node = self.graph[src]
+        value = float('inf')
         while node:
             if node.location == des:
                 value = node.val
@@ -154,22 +155,20 @@ class Graph:
     def dijkstra_shortest_path(self, src, des):
         vertices = {}
         for i in range(len(def_location)):
-            vertices[def_location[i]] = (
-                float('inf'), def_location[i], None)  # distance value, current node ,and previous node
+            # distance value, current node ,and previous node
+            vertices[def_location[i]] = (float('inf'), def_location[i], None)
 
         vertices[src] = (0, src, None)  # initialize the source node
 
-        self.traversal()
-        copy = self.reachabilty  # Obtain list of reachable nodes from each node
-        reachable_nodes = set(copy[src])  # List of nodes reachable by the current node
+        reachable_nodes = set(self.dfs(src, []))
 
         while des not in reachable_nodes:
             self.add_random()
-            self.traversal()
-            reachable_nodes = set(self.reachabilty[src])
+            reachable_nodes = set(self.dfs(src, []))
 
         dict_heap = []
         # Create a min heap of the vertices dictionary based on the distance value
+        heapq.heappush(dict_heap, vertices[src])
         for j in vertices:
             if vertices[j][1] in reachable_nodes:
                 heapq.heappush(dict_heap, vertices[j])
@@ -203,6 +202,7 @@ class Graph:
             current_cost = vertices[current_node][0] - vertices[vertices[current_node][2]][0]
             path.insert(0, (vertices[current_node][2], current_node, current_cost))
             current_node = vertices[current_node][2]
+
         print(src, 'to', des, '=> Cost: ', vertices[des][0], ' Shortest path: ', path)
 
 
@@ -214,8 +214,8 @@ def_edge = [['AU', 'EG', '12'], ['AU', 'HK', '6'], ['DK', 'EG', '4'], ['DK', 'BE
 # def_edge=[['EG','AU','12'], ['AU','HK','6'], ['DK','EG','4'], ['BE','DK','1'], ['HK','BE','9']]     #BE go everywhere then all have cycle
 
 run = Graph(def_location, def_edge)
-run.print_graph()
-run.check_cycle()
-run.check_strongly()
+# run.print_graph()
+# run.check_cycle()
+# run.check_strongly()
 run.dijkstra_shortest_path('EG', 'AU')
-run.print_graph()
+#run.print_graph()
