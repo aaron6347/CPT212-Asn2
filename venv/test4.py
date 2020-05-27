@@ -52,6 +52,53 @@ class Graph:
         print("Newly added edge     {0} -> {1}  ({2})".format(src, des, val))
         # self.printGraph()                       # to remove
 
+    """main function for cycle checking"""
+    def cycleMain(self):
+        result = False
+        print("1. Check one node \n2. Check all nodes")     # choose to either check cycle for one node or all nodes
+        choice = input("Select an option : ")
+        while choice != "1" and choice != "2":
+            print("Invalid input. Please try again")
+            choice = input("Select an option : ")
+
+        if choice == "1":
+            src = input("Enter a node :")
+            while src not in self.graph.keys():
+                print("Invalid input. Please try again")
+                src = input("Enter a node :")
+
+        while not result:
+            if choice == "1":                               # user checks a single node
+                result = self.checkCycle(src)
+                if not result:
+                    self.addRandom()
+                else:
+                    print(src + " has a cycle. The following is the graph")
+                    self.printGraph()
+            elif choice == "2":                             # user checks all node
+                for src, node in self.graph.items():
+                    if not result:
+                        result = self.checkCycle(src)
+                    else:
+                        temp = self.checkCycle(src)
+                if not result:
+                    self.addRandom()
+                else:
+                    print("The following is the graph")
+                    self.printGraph()
+
+    """uses dfs to check for a cycle, if cycle exists, return true, else return false"""
+    def checkCycle(self, src):
+        cycle = False
+        outgoing = []
+        outgoing = self.dfs(src, outgoing)
+        if src in outgoing:                                 # the src node is in the resultant visited list
+            outgoing.insert(0, src)
+            print("Node " + src + " has a cycle.")
+            print(outgoing)
+            cycle = True
+        return cycle
+
     """strongly connected main function"""
     def stronglyConnectedMain(self):
         result = False
@@ -172,7 +219,7 @@ default_edge=[['AU','EG','12'], ['AU','HK','6'], ['DK','EG','4'], ['DK','BE','1'
 # default_edge=[['EG','AU','12'], ['AU','HK','6'], ['DK','EG','4'], ['DK','BE','1'], ['HK','BE','9']]     #DK go everywhere can detect BE in cycle
 # default_edge=[['EG','AU','12'], ['AU','HK','6'], ['DK','EG','4'], ['BE','DK','1'], ['HK','BE','9']]     #BE go everywhere then all cycle and all strongly connected
 run = Graph(default_location, default_edge)
-dic={"1":"run.stronglyConnectedMain()", "2":"run.", "3":"run.dijkstraShortestPath", "4":None, "5":"run.printGraph()", "6":"exit()", "help":None}  #store functionality
+dic={"1":"run.stronglyConnectedMain()", "2":"run.cycleMain()", "3":"run.dijkstraShortestPath", "4":None, "5":"run.printGraph()", "6":"exit()", "help":None}  #store functionality
 
 clear=lambda : os.system('cls')
 cmds=["\nCommand list: ",
