@@ -3,18 +3,18 @@
 import heapq
 import os
 
-"""node to become a list to store location name, val as value in dictionary"""
 class AdjNode:
-    """construct node"""
+    """node to become a list to store location name, val as value in dictionary"""
     def __init__(self, data, val):
+        """construct node"""
         self.location = data    # store location name
         self.val = val          # store outgoing value
         self.next = None        # store next node
 
-"""graph to store each vertices as key and its outgoing vertices in a list-like object type as value"""
 class Graph:
-    """construct default graph"""
+    """graph to store each vertices as key and its outgoing vertices in a list-like object type as value"""
     def __init__(self, def_location, def_edge):
+        """construct default graph"""
         self.graph = { x: None for x in def_location}       # creation of graph/dictionary with default vertices
         for x in range(len(def_edge)):                      # add all default edges
             src, des, val = def_edge[x]                     # creation of nodes with location name, value
@@ -22,14 +22,14 @@ class Graph:
         self.possible_random = {}                           # to store a dictionary of non-existed edge {source : [destination]} for add random edge purpose
         self.getRandom()                                    # get all other non-existed edges for add random edges purpose
 
-    """add outgoing edge to the source location"""
     def addEdge(self, src, des, val):
+        """add outgoing edge to the source location"""
         node = AdjNode(des, val)        # create node to be inserted
         node.next = self.graph[src]     # set recent added location to be first and its next is the previous
         self.graph[src] = node          # set all outgoing locations to the source location
 
-    """generate dictionary of all possible endpoints for random edges"""
     def getRandom(self):
+        """generate dictionary of all possible endpoints for random edges"""
         for src, node in self.graph.items():        # find each existed edges in graph
             destination = [x for x in default_location if
                            x is not src]                # compute all vertices and eliminate self as 2nd endpoints(prevent self loop)
@@ -38,9 +38,8 @@ class Graph:
                 node = node.next
             self.possible_random[src] = destination     # pair up the 1st endpoints with all non-existed 2nd endpoints
 
-    """generate random vertices with random value"""
     def addRandom(self):
-        # print('can', self.possible_random)           # to remove
+        """generate random vertices with random value"""
         from random import randint, choice
         src = choice(list(self.possible_random))            # choose 1st endpoint
         des = choice(self.possible_random[src])             # choose 2nd endpoint from 1st endpoint's list
@@ -50,10 +49,9 @@ class Graph:
         if len(self.possible_random[src]) == 0:             # remove the 1st endpoint if no more 2nd endpoint for it
             del self.possible_random[src]
         print("Newly added edge     {0} -> {1}  ({2})".format(src, des, val))
-        # self.printGraph()                       # to remove
 
-    """main function for cycle checking"""
     def cycleMain(self):
+        """main function for cycle checking"""
         result = False
         print("1. Check one node \n2. Check all nodes")     # choose to either check cycle for one node or all nodes
         choice = input("Select an option : ")
@@ -87,8 +85,8 @@ class Graph:
                     print("The following is the graph")
                     self.printGraph()
 
-    """uses dfs to check for a cycle, if cycle exists, return true, else return false"""
     def checkCycle(self, src):
+        """uses dfs to check for a cycle, if cycle exists, return true, else return false"""
         cycle = False
         outgoing = []
         outgoing = self.dfs(src, outgoing)
@@ -99,8 +97,8 @@ class Graph:
             cycle = True
         return cycle
 
-    """strongly connected main function"""
     def stronglyConnectedMain(self):
+        """strongly connected main function"""
         result = False
         while not result:       # process of repeat checking and adding random edges else show graph
             result = self.checkStronglyConnected()
@@ -110,16 +108,15 @@ class Graph:
             else:
                 self.addRandom()
 
-    """strongly connected main function"""
     def checkStronglyConnected(self):
+        """strongly connected main function"""
         visited = { x: False for x in self.graph.keys()}                # set all vertices as non-visited yet
         self.stronglyConnectedDFS(default_location[0], visited)         # use AU as vertices and start depth first search
         if any(v == False for _,v in visited.items()):                  # check if the AU cannot reach any vertices, then return False
             return False
 
-        """reverse graph direction helper function"""
         def reverseGraph():
-            from time import sleep
+            """reverse graph direction helper function"""
             reversed_edge=[]
             for location, node in self.graph.items():                       # traverse each vertices
                 while node:                                                     # traverse each vertices' outgoing and add the reversed edges
@@ -134,8 +131,8 @@ class Graph:
             return False
         return True                                                         # else if AU can reach any vertices, then return True
 
-    """strongly connected depth first search function"""
     def stronglyConnectedDFS(self, location, visited):
+        """strongly connected depth first search function"""
         visited[location] = True                # set location as visited
         node = self.graph[location]
         while node:                             # check its outgoing location
@@ -143,8 +140,8 @@ class Graph:
                 self.stronglyConnectedDFS(node.location, visited)
             node = node.next
 
-    """shortest path using Dijkstra Algorithm"""
     def dijkstraShortestPath(self, src, des):
+        """shortest path using Dijkstra Algorithm"""
         vertices = {}
         for i in range(len(default_location)):
             # distance value, current node ,and previous node
@@ -185,8 +182,8 @@ class Graph:
             current_node = vertices[current_node][2]
         print(src, 'to', des, '=> Cost: ', vertices[des][0], ' Shortest path: ', path, '\n')
 
-    """depth first search of locations"""
     def dfs(self, src, visited):
+        """depth first search of locations"""
         visited.append(src)  # insert this location as visited
         node = self.graph[src]  # get location's outgoing node
         outgoing = []  # to store location's outgoing location0
@@ -199,8 +196,8 @@ class Graph:
             node = node.next
         return outgoing
 
-    """print the graph"""
     def printGraph(self):
+        """print the graph"""
         for src, node in self.graph.items():            # traverse each vertices
             str = 'Source {} :- '.format(src)
             while node:                                 # traverse each outgoing nodes
@@ -212,53 +209,59 @@ class Graph:
             print(str)
         print()
 
-"""main body"""
-default_location=['AU','EG','BE','DK','HK']
-default_edge=[['AU','EG','12'], ['AU','HK','6'], ['DK','EG','4'], ['DK','BE','1'], ['HK','BE','9']]
-# default_edge=[['AU','EG','12'], ['AU','HK','6'], ['EG','DK','4'], ['DK','BE','1'], ['HK','BE','9']]   #AU go everywhere can detect BE in cycle
-# default_edge=[['EG','AU','12'], ['AU','HK','6'], ['DK','EG','4'], ['DK','BE','1'], ['HK','BE','9']]     #DK go everywhere can detect BE in cycle
-# default_edge=[['EG','AU','12'], ['AU','HK','6'], ['DK','EG','4'], ['BE','DK','1'], ['HK','BE','9']]     #BE go everywhere then all cycle and all strongly connected
-run = Graph(default_location, default_edge)
-dic={"1":"run.stronglyConnectedMain()", "2":"run.cycleMain()", "3":"run.dijkstraShortestPath", "4":None, "5":"run.printGraph()", "6":"exit()", "help":None}  #store functionality
 
-clear=lambda : os.system('cls')
-cmds=["\nCommand list: ",
-    "              1            :   Strongly Connected in graph.",
-    "              2            :   Cycle in graph.",
-    "              3            :   Shortest Path in graph.",
-    "              4            :   Reset to default graph.",
-    "              5            :   Print the graph structure.",
-    "              6            :   Exit.",
-    "              help         :   Show commands.\n"]
+def reset(default_location, default_edge):
+    """reset function"""
+    return Graph(default_location, default_edge)
+
+def printcmd():
+    """print commands function"""
+    cmds = ["\nCommand list: ",
+            "              1            :   Strong Connectivity of the graph.",
+            "              2            :   Cycle Detection in the graph.",
+            "              3            :   Find Shortest Path in the graph.",
+            "              4            :   Reset to the default graph.",
+            "              5            :   Print the graph structure.",
+            "              6            :   Exit.",
+            "              help         :   Show commands.\n"]
+    print("\n".join(cmds))
+
+clear = lambda : os.system('cls')
+
+"""main body"""
+# default vertices and edges
+default_location = ['AU', 'EG', 'BE', 'DK', 'HK']
+default_edge = [['AU', 'EG', '12'], ['AU', 'HK', '6'], ['DK', 'EG', '4'], ['DK', 'BE', '1'], ['HK', 'BE', '9']]
+#store functionality
+dic = {"1":"run.stronglyConnectedMain()", "2":"run.cycleMain()", "3":"run.dijkstraShortestPath", "4":"reset(default_location, default_edge)", "5":"run.printGraph()", "6":"exit()", "help":"printcmd()"}
 print("Hi user, this is our CPT 212 Assignment 2: Graph Algorithms".center(120, '_'))
-print("\n".join(cmds))
+printcmd()
+# first graph
+run = reset(default_location, default_edge)
 while True:
     query = input("What's your function query?\n")
     clear()
     if query in dic:                    # if query is valid in main menu
-        if query != "4":                    # if query is not reset graph
-            if query == "3":                    # if query is shortest path and need arguments
-                while True:
-                    choices = default_location[:]       # copy all locations
-                    src = input("\nWhich starting location ? {}\n".format(choices)).strip()
-                    if src in choices:
-                        choices.remove(src)                 # remove selected location to avoid self finding
-                        des = input("Which destination location ? {}\n".format(choices)).strip()
-                        if des in choices:
-                            eval(dic[query] + "(src,des)")
-                            break
-                        else:
-                            print("Invalid location.\n")
-                            break
+        if query == "3":                    # if query is shortest path and need arguments
+            while True:
+                choices = default_location[:]       # copy all locations
+                src = input("\nWhich starting location ? {}\n".format(choices)).strip()
+                if src in choices:
+                    choices.remove(src)                 # remove selected location to avoid self finding
+                    des = input("Which destination location ? {}\n".format(choices)).strip()
+                    if des in choices:
+                        eval(dic[query] + "(src,des)")
+                        break
                     else:
                         print("Invalid location.\n")
                         break
-            elif query == "help":
-                print("\n".join(cmds))
-            else:
-                eval(dic[query])
-        else:                           # if query is reset graph
-            run = Graph(default_location, default_edge)
+                else:
+                    print("Invalid location.\n")
+                    break
+        elif query == "4":              # if query is resetting graph and expect to return a graph
+            run = eval(dic[query])
             print("The graph has been reset.\n")
+        else:
+            eval(dic[query])
     else:
-        print("Usage query : number 1-6 .\n")
+        print("Usage query : number 1-6 or 'help' for commands.\n")
