@@ -164,7 +164,6 @@ class Graph:
             if u[1] in visited:  # Skip the redundant visited nodes in Queue
                 continue
             visited.append(u[1])  # Store the current node into the list
-            # nodes_list = [i for i in def_location if i != u[1]]  # Get list of nodes other than itself
             node = self.graph[u[1]]  # Get the adjacent nodes from the current nodes
             while node:
                 if u[0] + node.val < vertices[node.location][0]:
